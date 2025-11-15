@@ -1921,87 +1921,251 @@ function renderTestimonials() {
     `;
 }
 
-/* ================= PROJECT MODAL OPENING ================= */
-function initProjectModal() {
-    const modal = document.getElementById("project-modal");
-    const modalBody = modal.querySelector(".modal-body");
-    const closeBtn = modal.querySelector(".modal-close-btn");
+/* ================= RENDER HERO CARDS ================= */
+function renderHeroCarousel() {
+    const track = document.querySelector(".hero-track");
+    if (!track) return;
 
-    document.body.addEventListener("click", e => {
-        const btn = e.target.closest("[data-open]");
-        if (!btn) return;
+    const cards = projects.map(project => `
+        <div class="hero-card" data-id="${project.id}">
+            <div class="hero-image-container">
+                <img src="${project.images[0]}" alt="${project.title}">
+            </div>
+            <div class="hero-content">
+                <h2>${project.title}</h2>
+                <p>${project.hook}</p>
+                <div class="hero-meta">
+                    ${project.tags.map(t => `<span>${t}</span>`).join("")}
+                </div>
+                <div class="hero-buttons">
+                    <button class="btn btn-primary" data-open="${project.id}">
+                        <span>View Case Study</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    `).join("");
 
-        const id = btn.dataset.open;
-        const project = projects.find(p => p.id === id);
-        if (!project) return;
+    track.innerHTML = cards;
+}
 
-        modalBody.innerHTML = `
-            ${project.content.overview}
-            ${project.content.methodology}
-            ${project.content.analysis}
-            ${project.content.results}
-            ${project.content.media}
-        `;
+/* ================= RENDER TESTIMONIALS ================= */
+function renderTestimonials() {
+    const container = document.getElementById("testimonial-scroller");
+    if (!container) return;
 
-        modal.classList.add("open");
-        document.body.style.overflow = "hidden";
-    });
+    const items = testimonials.map(t => `
+        <div class="testimonial-card">
+            <p class="italic">"${t.quote}"</p>
+            <div class="author-info">
+                <p class="font-bold text-black">${t.author}</p>
+                <p class="text-sm text-gray-400">${t.company}</p>
+            </div>
+        </div>
+    `).join("");
 
-    closeBtn.addEventListener("click", () => {
-        modal.classList.remove("open");
-        document.body.style.overflow = "";
+    container.innerHTML = `
+        <div class="scroller-inner">
+            ${items} ${items}
+        </div>
+    `;
+}
+
+/* ================= MEDIA VIEWER: INLINE + LIGHTBOX ================= */
+
+/** Hydrate all .media-viewer blocks (set initial image, pager, arrows). */
+function hydrateMediaViewers(root = document) {
+    const viewers = root.querySelectorAll(".media-viewer");
+    viewers.forEach(viewer => {
+        const mediaList = JSON.parse(viewer.dataset.media || "[]");
+        if (!mediaList.length) return;
+
+        const img        = viewer.querySelector(".media-stage img");
+        const captionEl  = viewer.querySelector(".media-caption");
+        const curEl      = viewer.querySelector(".media-pager .cur");
+        const totalEl    = viewer.querySelector(".media-pager .total");
+        const prevBtn    = viewer.querySelector(".media-btn.prev");
+        const nextBtn    = viewer.querySelector(".media-btn.next");
+
+        let index = 0;
+
+        if (totalEl) totalEl.textContent = String(mediaList.length);
+        if (captionEl && !captionEl.dataset.base) {
+            captionEl.dataset.base = captionEl.textContent || "";
+        }
+
+        const update = () => {
+            if (img) {
+                img.src = mediaList[index];
+                img.alt = captionEl?.dataset.base
+                    ? `${captionEl.dataset.base} – ${index + 1}`
+                    : `Slide ${index + 1}`;
+            }
+            if (curEl) curEl.textContent = String(index + 1);
+            if (captionEl) {
+                const base = captionEl.dataset.base || "Slide";
+                captionEl.textContent = `${base} ${index + 1}`;
+            }
+        };
+
+        update();
+
+        if (prevBtn) {
+            prevBtn.onclick = (e) => {
+                e.stopPropagation();
+                index = (index - 1 + mediaList.length) % mediaList.length;
+                update();
+            };
+        }
+
+        if (nextBtn) {
+            nextBtn.onclick = (e) => {
+                e.stopPropagation();
+                index = (index + 1) % mediaList.length;
+                update();
+            };
+        }
     });
 }
 
-/* ================= MEDIA VIEWER INIT ================= */
+/** Set up click-to-zoom + lightbox navigation. */
 function initMediaViewers() {
-    document.body.addEventListener("click", e => {
-        const viewer = e.target.closest(".media-viewer img");
+    // hydrate any viewers already in the DOM
+    hydrateMediaViewers();
+
+    document.body.addEventListener("click", (e) => {
+        const img = e.target.closest(".media-stage img");
+        if (!img) return;
+
+        const viewer    = img.closest(".media-viewer");
         if (!viewer) return;
 
-        const wrapper = viewer.closest(".media-viewer");
-        const mediaList = JSON.parse(wrapper.dataset.media);
+        const mediaList = JSON.parse(viewer.dataset.media || "[]");
+        if (!mediaList.length) return;
 
+        const curFromPager = viewer.querySelector(".media-pager .cur");
         let index = 0;
+        if (curFromPager) {
+            const n = parseInt(curFromPager.textContent || "1", 10);
+            if (!Number.isNaN(n) && n >= 1 && n <= mediaList.length) {
+                index = n - 1;
+            }
+        }
+
         const lightbox = document.createElement("div");
         lightbox.className = "lightbox open";
-
         lightbox.innerHTML = `
             <div class="lightbox-inner">
                 <div class="lightbox-stage">
-                    <img src="${mediaList[index]}">
+                    <img src="${mediaList[index]}" alt="">
                     <div class="lightbox-controls">
-                        <button class="lightbox-btn prev">&#10094;</button>
-                        <button class="lightbox-btn next">&#10095;</button>
+                        <button class="lightbox-btn prev" aria-label="Previous">&#10094;</button>
+                        <button class="lightbox-btn next" aria-label="Next">&#10095;</button>
                     </div>
                 </div>
                 <div class="lightbox-topbar">
-                    <div>${index + 1} / ${mediaList.length}</div>
-                    <button class="close">&times;</button>
+                    <div class="lightbox-counter">${index + 1} / ${mediaList.length}</div>
+                    <button class="close" aria-label="Close">&times;</button>
                 </div>
             </div>
         `;
 
         document.body.appendChild(lightbox);
 
-        const updateImg = () => {
-            lightbox.querySelector("img").src = mediaList[index];
-            lightbox.querySelector(".lightbox-topbar div").textContent = `${index + 1} / ${mediaList.length}`;
+        const imgEl      = lightbox.querySelector(".lightbox-stage img");
+        const counterEl  = lightbox.querySelector(".lightbox-counter");
+        const prevBtn    = lightbox.querySelector(".lightbox-btn.prev");
+        const nextBtn    = lightbox.querySelector(".lightbox-btn.next");
+        const closeBtn   = lightbox.querySelector(".close");
+
+        const update = () => {
+            if (imgEl) imgEl.src = mediaList[index];
+            if (counterEl) counterEl.textContent = `${index + 1} / ${mediaList.length}`;
         };
 
-        lightbox.querySelector(".prev").onclick = () => {
-            index = (index - 1 + mediaList.length) % mediaList.length;
-            updateImg();
-        };
-
-        lightbox.querySelector(".next").onclick = () => {
-            index = (index + 1) % mediaList.length;
-            updateImg();
-        };
-
-        lightbox.querySelector(".close").onclick = () => {
+        const close = () => {
+            document.removeEventListener("keydown", keyHandler);
             lightbox.remove();
         };
+
+        const goPrev = () => {
+            index = (index - 1 + mediaList.length) % mediaList.length;
+            update();
+        };
+
+        const goNext = () => {
+            index = (index + 1) % mediaList.length;
+            update();
+        };
+
+        const keyHandler = (evt) => {
+            if (evt.key === "Escape") close();
+            if (evt.key === "ArrowLeft") goPrev();
+            if (evt.key === "ArrowRight") goNext();
+        };
+
+        if (prevBtn) prevBtn.onclick = (evt) => { evt.stopPropagation(); goPrev(); };
+        if (nextBtn) nextBtn.onclick = (evt) => { evt.stopPropagation(); goNext(); };
+        if (closeBtn) closeBtn.onclick = close;
+
+        lightbox.addEventListener("click", (evt) => {
+            if (evt.target === lightbox) close();
+        });
+
+        document.addEventListener("keydown", keyHandler);
+    });
+}
+
+/* ================= PROJECT MODAL OPENING ================= */
+function initProjectModal() {
+    const modal     = document.getElementById("project-modal");
+    if (!modal) return;
+
+    const modalBody = modal.querySelector(".modal-body");
+    const closeBtn  = modal.querySelector(".modal-close-btn");
+
+    const closeModal = () => {
+        modal.classList.remove("open");
+        document.body.style.overflow = "";
+    };
+
+    document.body.addEventListener("click", (e) => {
+        const btn = e.target.closest("[data-open]");
+        if (btn) {
+            const id      = btn.dataset.open;
+            const project = projects.find(p => p.id === id);
+            if (!project) return;
+
+            modalBody.innerHTML = `
+                ${project.content.overview}
+                ${project.content.methodology}
+                ${project.content.analysis}
+                ${project.content.results}
+                ${project.content.media}
+            `;
+
+            // re-hydrate media viewers inside the modal
+            hydrateMediaViewers(modalBody);
+
+            modal.classList.add("open");
+            document.body.style.overflow = "hidden";
+            return;
+        }
+
+        // Click outside modal-content closes it
+        if (modal.classList.contains("open") && !e.target.closest(".modal-content")) {
+            closeModal();
+        }
+    });
+
+    if (closeBtn) {
+        closeBtn.addEventListener("click", closeModal);
+    }
+
+    document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && modal.classList.contains("open")) {
+            closeModal();
+        }
     });
 }
 
@@ -2010,5 +2174,3 @@ renderHeroCarousel();
 renderTestimonials();
 initProjectModal();
 initMediaViewers();
-
-
