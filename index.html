@@ -1,0 +1,2014 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sphoorthy Masa - Senior UX Researcher (Portfolio)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Great+Vibes&display=swap" rel="stylesheet">
+    <style>
+        /* --- "Aurora Quartz" Futuristic Light Theme --- */
+        :root {
+          --color-bg: #f6fbff;
+          --color-surface: rgba(255, 255, 255, 0.88);
+          --color-surface-strong: #ffffff;
+          --color-primary: #0ea5e9;
+          --color-primary-hover: #0284c7;
+          --color-text-primary: #020617;
+          --color-text-secondary: #4b5563;
+          --color-border: rgba(148, 163, 184, 0.35);
+          --color-accent-soft: rgba(56, 189, 248, 0.12);
+          --color-accent-strong: rgba(56, 189, 248, 0.45);
+        }
+
+        * {
+          box-sizing: border-box;
+        }
+
+        body{
+          font-family:'Inter',sans-serif;
+          color: var(--color-text-secondary);
+          background:
+            radial-gradient(circle at 10% -10%, rgba(196, 239, 255, 0.9) 0, transparent 55%),
+            radial-gradient(circle at 90% 110%, rgba(254, 237, 255, 0.95) 0, transparent 55%),
+            linear-gradient(135deg, #f9fbff 0%, #f4fcff 40%, #fdf8ff 80%, #f6fbff 100%);
+          position: relative;
+          min-height: 100vh;
+          overflow-x: hidden;
+        }
+
+        /* Subtle animated grid lines */
+        .bg-grid-layer {
+          position: fixed;
+          inset: -50px;
+          background-image:
+            linear-gradient(to right, rgba(148, 163, 184, 0.16) 1px, transparent 1px),
+            linear-gradient(to bottom, rgba(148, 163, 184, 0.10) 1px, transparent 1px);
+          background-size: 80px 80px;
+          opacity: 0.18;
+          mix-blend-mode: soft-light;
+          z-index: 0;
+          pointer-events: none;
+          animation: gridFloat 30s linear infinite;
+        }
+
+        @keyframes gridFloat {
+          0% { transform: translate3d(0,0,0); }
+          100% { transform: translate3d(-40px,-40px,0); }
+        }
+
+        /* Orbital glow blobs */
+        .bg-orbit-layer {
+          position: fixed;
+          inset: 0;
+          pointer-events: none;
+          z-index: 0;
+        }
+        .bg-orbit-layer::before,
+        .bg-orbit-layer::after {
+          content: "";
+          position: absolute;
+          width: 520px;
+          height: 520px;
+          border-radius: 999px;
+          background: radial-gradient(circle at 30% 30%, rgba(56, 189, 248, 0.35), transparent 65%);
+          filter: blur(12px);
+          animation: orbit1 22s ease-in-out infinite alternate;
+          mix-blend-mode: screen;
+        }
+        .bg-orbit-layer::after {
+          width: 640px;
+          height: 640px;
+          background: radial-gradient(circle at 70% 70%, rgba(244, 114, 182, 0.36), transparent 65%);
+          animation: orbit2 28s ease-in-out infinite alternate;
+        }
+
+        @keyframes orbit1 {
+          0% { transform: translate3d(-10%, -20%, 0) scale(1); }
+          100% { transform: translate3d(10%, 10%, 0) scale(1.1); }
+        }
+        @keyframes orbit2 {
+          0% { transform: translate3d(40%, 60%, 0) scale(1); }
+          100% { transform: translate3d(0%, 10%, 0) scale(1.08); }
+        }
+
+        /* Kill old hidden background hooks */
+        body::before { display: none; }
+        #bg-canvas { display: none; }
+
+        .content-container{
+          position:relative;
+          z-index:1;
+          backdrop-filter: blur(10px);
+          -webkit-backdrop-filter: blur(10px);
+        }
+
+        /* --- Header --- */
+        header{
+          position: fixed;
+          top: 0;
+          left: 0;
+          right: 0;
+          z-index: 50;
+          background: radial-gradient(circle at top left, rgba(240, 249, 255, 0.96), rgba(248, 250, 252, 0.98));
+          backdrop-filter: blur(18px) saturate(140%);
+          -webkit-backdrop-filter: blur(18px) saturate(140%);
+          border-bottom: 1px solid rgba(148, 163, 184, 0.35);
+          transition: transform .4s ease-out, box-shadow .4s ease-out, background .4s ease-out;
+          box-shadow: 0 18px 50px rgba(15, 23, 42, 0.06);
+        }
+        header.hidden{transform:translateY(-120%)}
+        .header-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.9rem 1.5rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            gap: 1.5rem;
+        }
+
+        .header-logo {
+            font-family:'Inter',sans-serif;
+            font-size: 1.6rem;
+            background: linear-gradient(120deg, #0ea5e9, #22c55e, #f97316, #0ea5e9);
+            background-size: 260% 260%;
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            font-weight: 800;
+            letter-spacing: -0.04em;
+            animation: logoGlow 16s ease-in-out infinite;
+        }
+
+        @keyframes logoGlow {
+          0% { background-position: 0% 50%; text-shadow: 0 0 18px rgba(56,189,248,0.35); }
+          50% { background-position: 100% 50%; text-shadow: 0 0 26px rgba(56,189,248,0.50); }
+          100% { background-position: 0% 50%; text-shadow: 0 0 18px rgba(56,189,248,0.35); }
+        }
+
+        header nav {
+          padding: 0.15rem;
+          border-radius: 999px;
+          background: radial-gradient(circle at top left, rgba(255, 255, 255, 0.9), rgba(226, 232, 240, 0.85));
+          border: 1px solid rgba(148, 163, 184, 0.45);
+          box-shadow: 0 10px 34px rgba(148, 163, 184, 0.45);
+        }
+
+        header nav a {
+            color: var(--color-text-secondary);
+            font-weight: 600;
+            padding: 0.45rem 0.9rem;
+            border-radius: 999px;
+            font-size: 0.9rem;
+            position: relative;
+            overflow: hidden;
+            transition: color 0.2s ease, background-color 0.2s ease, transform 0.2s ease, box-shadow 0.25s ease;
+        }
+        header nav a::before {
+          content: "";
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(120deg, rgba(56, 189, 248, 0.2), rgba(34, 197, 94, 0.18));
+          opacity: 0;
+          transition: opacity 0.2s ease;
+        }
+        header nav a span {
+          position: relative;
+          z-index: 1;
+        }
+        header nav a:hover {
+            color: #0f172a;
+            background-color: rgba(255, 255, 255, 0.9);
+            transform: translateY(-1px);
+            box-shadow: 0 10px 25px rgba(15, 23, 42, 0.12);
+        }
+        header nav a:hover::before {
+          opacity: 1;
+        }
+        header nav a:focus-visible {
+            outline: 3px solid var(--color-accent-strong);
+            outline-offset: 2px;
+            color: #0f172a;
+            background-color: rgba(255, 255, 255, 0.98);
+        }
+
+        /* Wrap the nav labels to keep text unchanged but allow gradient hover */
+        header nav a:not(:has(span))::before { display:none; } /* backward safety */
+
+        /* --- Hero Carousel --- */
+        #hero-carousel {
+            width: 100%;
+            padding: 132px 5% 80px;
+            position: relative;
+        }
+        #hero-carousel::before {
+          content: "";
+          position: absolute;
+          inset-inline: 6%;
+          top: 110px;
+          height: 320px;
+          border-radius: 32px;
+          border: 1px dashed rgba(148, 163, 184, 0.35);
+          background: radial-gradient(circle at top left, rgba(56, 189, 248, 0.09), transparent 55%);
+          opacity: 0.9;
+          pointer-events: none;
+          z-index: -1;
+        }
+        .hero-track {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 2.5rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        .hero-card {
+            background: var(--color-surface);
+            border-radius: 26px;
+            border: 1px solid rgba(148, 163, 184, 0.3);
+            box-shadow:
+              0 26px 60px rgba(15, 23, 42, 0.09),
+              0 0 0 1px rgba(255, 255, 255, 0.9) inset;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            isolation: isolate;
+            transform-origin: center;
+            transition:
+              transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+              box-shadow 0.4s ease,
+              border-color 0.3s ease,
+              background 0.3s ease;
+        }
+        .hero-card::before {
+          content: "";
+          position: absolute;
+          inset: -20%;
+          background:
+            radial-gradient(circle at 0% 0%, rgba(56, 189, 248, 0.18), transparent 55%),
+            radial-gradient(circle at 100% 100%, rgba(244, 114, 182, 0.2), transparent 55%);
+          mix-blend-mode: screen;
+          opacity: 0;
+          transition: opacity 0.4s ease;
+          pointer-events: none;
+        }
+        .hero-card:hover {
+            transform: translateY(-10px) rotate3d(1, -1, 0, 7deg) scale(1.01);
+            box-shadow:
+              0 40px 85px rgba(15, 23, 42, 0.16),
+              0 0 0 1px rgba(255, 255, 255, 0.9) inset;
+            border-color: rgba(56, 189, 248, 0.5);
+            background: linear-gradient(135deg, rgba(255,255,255,0.92), rgba(240,249,255,0.96));
+        }
+        .hero-card:hover::before {
+          opacity: 1;
+        }
+        .hero-card .hero-image-container {
+            height: 220px;
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero-card .hero-image-container::after {
+          content: "";
+          position: absolute;
+          inset: 0;
+          background: radial-gradient(circle at top, rgba(15,23,42,0.02), transparent 60%);
+        }
+        .hero-card .hero-image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transform: scale(1.02);
+            transition: transform 0.6s ease-out;
+        }
+        .hero-card:hover .hero-image-container img {
+            transform: scale(1.09) translateY(-3px);
+        }
+        .hero-card .hero-content {
+            padding: 1.9rem 1.9rem 1.7rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            height: 100%;
+            flex: 1;
+        }
+        .hero-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.45rem;
+        }
+        .hero-meta span {
+            background-color: rgba(15,23,42,0.02);
+            color: var(--color-primary);
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 0.35rem 0.9rem;
+            border-radius: 9999px;
+            border: 1px solid rgba(56, 189, 248, 0.25);
+            backdrop-filter: blur(10px);
+        }
+        @media (max-width: 1023px) {
+            .hero-track {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+            .hero-card .hero-image-container {
+                height: 200px;
+            }
+        }
+        @media (max-width: 767px) {
+            #hero-carousel {
+                padding: 110px 1.25rem 56px;
+            }
+            .hero-track {
+                grid-template-columns: 1fr;
+            }
+            .hero-card .hero-image-container {
+                height: 190px;
+            }
+        }
+
+        .hero-content h2 {
+            font-size: clamp(1.55rem, 2.5vw, 2.35rem);
+            font-weight: 800;
+            color: var(--color-text-primary);
+            line-height: 1.05;
+            letter-spacing: -0.03em;
+        }
+        .hero-content p {
+            font-size: clamp(0.95rem, 1.2vw, 1.05rem);
+            color: var(--color-text-secondary);
+            margin-top: 0.25rem;
+        }
+        .hero-buttons {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+            margin-top: auto;
+            padding-top: 0.75rem;
+        }
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.8rem 1.6rem;
+            font-size: 0.95rem;
+            font-weight: 600;
+            border-radius: 999px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.22s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .btn::after {
+          content: "";
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(120deg, rgba(255, 255, 255, 0.45), transparent 60%);
+          transform: translateX(-120%);
+          transition: transform 0.5s ease;
+        }
+        .btn svg {
+          position: relative;
+          z-index: 1;
+        }
+        .btn span {
+          position: relative;
+          z-index: 1;
+        }
+        .btn-primary {
+            background: radial-gradient(circle at top left, #38bdf8, #0ea5e9);
+            color: white;
+            box-shadow: 0 12px 30px rgba(56, 189, 248, 0.5);
+        }
+        .btn-primary:hover {
+            background: radial-gradient(circle at top right, #0ea5e9, #0369a1);
+            transform: translateY(-1px) scale(1.02);
+            box-shadow: 0 18px 40px rgba(56, 189, 248, 0.6);
+        }
+        .btn:hover::after {
+          transform: translateX(0%);
+        }
+        .btn:focus-visible {
+            outline: 3px solid var(--color-accent-strong);
+            outline-offset: 3px;
+        }
+
+        /* --- Content Sections --- */
+        .content-section {
+            padding: 3.7rem 5% 3.5rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            position: relative;
+        }
+        .content-section::before {
+          content: "";
+          position: absolute;
+          inset-inline: -5%;
+          inset-block: 1.2rem;
+          background: radial-gradient(circle at top left, rgba(56, 189, 248, 0.06), transparent 55%);
+          opacity: 0.7;
+          pointer-events: none;
+          z-index: -1;
+        }
+        .content-section-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--color-text-primary);
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        .card {
+            background: var(--color-surface);
+            border-radius: 24px;
+            border: 1px solid var(--color-border);
+            box-shadow:
+              0 22px 60px rgba(15, 23, 42, 0.07),
+              0 0 0 1px rgba(255, 255, 255, 0.85) inset;
+            padding: 2.5rem;
+            backdrop-filter: blur(20px) saturate(135%);
+            -webkit-backdrop-filter: blur(20px) saturate(135%);
+        }
+        .about-card {
+            padding: clamp(2.3rem, 4vw, 3.4rem);
+        }
+
+        /* About */
+        .about-photo-wrapper {
+            display: flex;
+            justify-content: center;
+        }
+        .about-photo-frame {
+            position: relative;
+            width: min(320px, 100%);
+            aspect-ratio: 3 / 4;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow:
+              0 26px 60px rgba(15, 23, 42, 0.3),
+              0 0 0 1px rgba(255, 255, 255, 0.95);
+            background: radial-gradient(circle at top, rgba(148, 163, 184, 0.25), transparent 70%);
+        }
+        .about-photo-frame::before {
+            content: "";
+            position: absolute;
+            inset: -40%;
+            background:
+              radial-gradient(circle at 0% 0%, rgba(56, 189, 248, 0.32), transparent 55%),
+              radial-gradient(circle at 100% 100%, rgba(244, 114, 182, 0.32), transparent 55%);
+            mix-blend-mode: screen;
+            opacity: 0.85;
+        }
+        .about-photo-frame::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            border: 1px solid rgba(255,255,255,0.7);
+            pointer-events: none;
+        }
+        .about-photo {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: relative;
+            z-index: 1;
+        }
+        .about-photo-label {
+            position: absolute;
+            left: 1.25rem;
+            bottom: 1.25rem;
+            background: rgba(15, 23, 42, 0.83);
+            color: #fff;
+            padding: 0.4rem 0.95rem;
+            border-radius: 999px;
+            font-size: 0.78rem;
+            font-weight: 600;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            z-index: 2;
+        }
+        .about-highlights {
+            display: grid;
+            gap: 1rem;
+        }
+        @media (min-width: 640px) {
+            .about-highlights {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+        @media (min-width: 1024px) {
+            .about-highlights {
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+            }
+        }
+        .about-highlight {
+            background: linear-gradient(135deg, rgba(56, 189, 248, 0.09), rgba(249, 250, 251, 0.96));
+            border: 1px solid rgba(56, 189, 248, 0.28);
+            border-radius: 18px;
+            padding: 1.4rem;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            box-shadow: 0 16px 38px rgba(15, 23, 42, 0.08);
+        }
+        .about-highlight h4 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--color-text-primary);
+        }
+        .about-highlight p {
+            font-size: 0.96rem;
+            color: var(--color-text-secondary);
+            line-height: 1.5;
+        }
+        @media (max-width: 767px) {
+            .about-photo-wrapper {
+                order: -1;
+                margin-bottom: 1.8rem;
+            }
+            .about-photo-frame {
+                width: min(280px, 80vw);
+            }
+        }
+
+        /* Competency tag overrides (keep text & mapping) */
+        .bg-black\/10.text-lime-400 {
+            background-color: rgba(56,189,248,0.11) !important;
+            color: var(--color-primary) !important;
+            border: 1px solid rgba(56,189,248,0.5) !important;
+            font-weight: 500;
+        }
+
+        /* Skill tags */
+        .tag-badge {
+            background: rgba(255, 255, 255, 0.92);
+            color: var(--color-primary);
+            font-size: .78rem;
+            font-weight: 500;
+            padding: .28rem .85rem;
+            border-radius: 9999px;
+            border: 1px solid rgba(56, 189, 248, 0.4);
+            box-shadow: 0 8px 22px rgba(15, 23, 42, 0.08);
+            backdrop-filter: blur(12px);
+        }
+
+        /* Skills blocks */
+        .p-6.bg-gray-800\/50 {
+            background: linear-gradient(135deg, rgba(255,255,255,0.95), rgba(240,249,255,0.96));
+            border-radius: 18px;
+            border: 1px solid rgba(148, 163, 184, 0.4);
+            box-shadow: 0 18px 40px rgba(15,23,42,0.09);
+        }
+
+        /* Contact Buttons */
+        a[href^="mailto:"] {}
+
+        .btn-contact {
+            display: inline-block;
+            width: 100%;
+            font-weight: 600;
+            padding: 1rem 2.5rem;
+            font-size: 1.02rem;
+            border-radius: 999px;
+            box-shadow: 0 14px 40px rgba(15, 23, 42, 0.18);
+            transition: all 0.22s ease;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        @media (min-width: 640px) {
+            .btn-contact {
+                width: auto;
+            }
+        }
+        .btn-contact::after {
+          content: "";
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(120deg, rgba(255,255,255,0.45), transparent 60%);
+          transform: translateX(-120%);
+          transition: transform 0.45s ease;
+        }
+        .btn-contact:hover::after {
+          transform: translateX(0%);
+        }
+        .btn-email {
+            background: radial-gradient(circle at top left, #38bdf8, #0ea5e9);
+            color: white;
+        }
+        .btn-email:hover {
+            background: radial-gradient(circle at top right, #0ea5e9, #0369a1);
+            box-shadow: 0 20px 45px rgba(56,189,248,0.65);
+            transform: translateY(-1px) scale(1.02);
+        }
+        .btn-linkedin {
+            background: radial-gradient(circle at top left, #38bdf8, #0077B5);
+            color: white;
+        }
+        .btn-linkedin:hover {
+            background: radial-gradient(circle at top right, #0077B5, #0369a1);
+            box-shadow: 0 20px 45px rgba(15, 23, 42, 0.35);
+            transform: translateY(-1px) scale(1.02);
+        }
+
+        /* Testimonials Scroller */
+        .testimonial-scroller{
+            max-width:1200px;
+            margin:auto;
+            overflow:hidden;
+            -webkit-mask:linear-gradient(90deg,transparent,black 20%,black 80%,transparent);
+            mask:linear-gradient(90deg,transparent,black 20%,black 80%,transparent)
+        }
+        .scroller-inner{
+            display:flex;
+            gap:1.5rem;
+            width:max-content;
+            animation:scroll 70s linear infinite
+        }
+        .testimonial-scroller:hover .scroller-inner{animation-play-state:paused}
+        @keyframes scroll{to{transform:translateX(calc(-50% - .75rem))}}
+
+        /* Testimonial card */
+        .testimonial-card {
+            width: 380px;
+            height: 300px;
+            background: var(--color-surface);
+            border-radius: 22px;
+            border: 1px solid rgba(148, 163, 184, 0.45);
+            box-shadow:
+              0 22px 56px rgba(15, 23, 42, 0.1),
+              0 0 0 1px rgba(255,255,255,0.9) inset;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 1.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+        .testimonial-card::before {
+          content: "";
+          position: absolute;
+          inset-inline: -20%;
+          top: -40%;
+          height: 60%;
+          background: radial-gradient(circle at 0% 0%, rgba(56, 189, 248, 0.18), transparent 60%);
+          opacity: 0.7;
+          pointer-events: none;
+        }
+        .testimonial-card p.italic {
+            flex-grow: 1;
+            overflow-y: auto;
+            text-align: left;
+            padding-right: 10px;
+            margin-bottom: 1rem;
+            scrollbar-width: thin;
+            scrollbar-color: var(--color-border) var(--color-surface);
+        }
+        .testimonial-card p.italic::-webkit-scrollbar {
+            width: 6px;
+        }
+        .testimonial-card p.italic::-webkit-scrollbar-track {
+            background: var(--color-surface);
+        }
+        .testimonial-card p.italic::-webkit-scrollbar-thumb {
+            background-color: var(--color-border);
+            border-radius: 6px;
+        }
+        .testimonial-card .author-info {
+            text-align: center;
+            flex-shrink: 0;
+            position: relative;
+            z-index: 1;
+        }
+
+        .panel {
+            background: var(--color-surface);
+            border-radius: 20px;
+            border: 1px solid var(--color-border);
+            box-shadow: 0 12px 40px rgba(15,23,42,0.08);
+            transition: box-shadow .3s ease, transform .3s ease, border-color .3s ease;
+            padding: 1.5rem;
+        }
+        .panel:hover {
+          box-shadow: 0 20px 55px rgba(15,23,42,0.12);
+          transform: translateY(-4px);
+          border-color: rgba(56, 189, 248, 0.55);
+        }
+        .text-black { color: var(--color-text-primary) !important; }
+        .text-gray-300, .text-gray-400 { color: var(--color-text-secondary) !important; }
+        .text-lime-400 { color: var(--color-primary) !important; }
+
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+
+        /* Project Modal */
+        #project-modal {
+            position: fixed;
+            inset: 0;
+            z-index: 999;
+            display: none;
+            background: radial-gradient(circle at top, rgba(226, 232, 240, 0.5), rgba(15,23,42,0.25));
+            backdrop-filter: blur(18px) saturate(145%);
+            -webkit-backdrop-filter: blur(18px) saturate(145%);
+            animation: fadeIn .3s ease;
+        }
+        #project-modal.open { display: grid; place-items: center; }
+
+        .modal-content {
+            position: relative;
+            width: min(95vw, 1100px);
+            height: min(90vh, 900px);
+            background: linear-gradient(145deg, rgba(255,255,255,0.98), rgba(241,245,249,0.98));
+            border-radius: 26px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            box-shadow:
+              0 30px 120px rgba(15, 23, 42, 0.35),
+              0 0 0 1px rgba(255,255,255,0.95) inset;
+            animation: slideIn .4s ease-out;
+            border: 1px solid rgba(148, 163, 184, 0.6);
+        }
+        .modal-header {
+            padding: 1.7rem 2rem 1.3rem;
+            border-bottom: 1px solid rgba(148, 163, 184, 0.35);
+            position: relative;
+            background: radial-gradient(circle at top left, rgba(56, 189, 248, 0.18), transparent 60%);
+        }
+        .modal-header h3 {
+            font-size: 1.65rem;
+            font-weight: 700;
+            color: var(--color-text-primary);
+        }
+        .modal-close-btn {
+            position: absolute;
+            top: 1.4rem;
+            right: 1.4rem;
+            width: 34px;
+            height: 34px;
+            border-radius: 999px;
+            background: var(--color-surface-strong);
+            border: 1px solid rgba(148, 163, 184, 0.6);
+            color: var(--color-text-secondary);
+            font-size: 1.5rem;
+            line-height: 1;
+            cursor: pointer;
+            transition: all .2s ease;
+            box-shadow: 0 10px 26px rgba(15, 23, 42, 0.18);
+        }
+        .modal-close-btn:hover {
+            background: rgba(248,250,252,1);
+            color: var(--color-primary-hover);
+            transform: translateY(-1px) scale(1.03);
+        }
+        .modal-close-btn:focus-visible {
+            outline: 3px solid var(--color-accent-strong);
+            outline-offset: 3px;
+        }
+        .modal-body {
+            padding: 2rem;
+            overflow-y: auto;
+            flex-grow: 1;
+        }
+
+        .modal-body h4 {
+            font-size: 1.35rem;
+            font-weight: 700;
+            color: var(--color-text-primary);
+            margin-top: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        .modal-body h4:first-child {
+            margin-top: 0;
+        }
+        .modal-body h5 {
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: var(--color-text-primary);
+            margin-bottom: 0.25rem;
+        }
+        .modal-body p {
+            color: var(--color-text-secondary);
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+        .modal-body ul {
+            list-style-type: disc;
+            margin-left: 1.25rem;
+            color: var(--color-text-secondary);
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+        .modal-body .methodology-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+        }
+        .modal-body .methodology-item,
+        .modal-body .insight-card {
+            background: #f9fafb;
+            border: 1px solid rgba(148, 163, 184, 0.55);
+            border-radius: 16px;
+            padding: 1.25rem;
+        }
+        .modal-body .stat-card {
+            background: #f9fafb;
+            border: 1px solid rgba(148, 163, 184, 0.7);
+            border-left: 4px solid var(--color-primary);
+            border-radius: 12px;
+            padding: 1rem;
+            text-align: center;
+        }
+        .modal-body .stat-card .stat-number {
+            font-size: 2.25rem;
+            font-weight: 800;
+            color: var(--color-primary);
+            line-height: 1;
+        }
+        .modal-body .stat-card .stat-description {
+            font-size: .875rem;
+            margin-top: .5rem;
+            color: var(--color-text-secondary);
+        }
+        .modal-body .bg-black\/20 {
+            background: #f9fafb;
+            border: 1px solid rgba(148, 163, 184, 0.6);
+        }
+        .modal-body .text-lime-200 {
+            color: #6b7280;
+            font-style: italic;
+        }
+        .modal-body table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+        .modal-body th, .modal-body td {
+            padding: 0.75rem 1rem;
+            border: 1px solid rgba(148, 163, 184, 0.6);
+            text-align: left;
+            color: var(--color-text-secondary);
+        }
+        .modal-body th {
+            background-color: #eef2ff;
+            color: var(--color-text-primary);
+            font-weight: 600;
+        }
+        .modal-body .font-bold.text-lime-400 {
+            color: var(--color-primary) !important;
+            font-weight: 600;
+        }
+
+        .metric-card {
+            background: #f9fafb;
+            border: 1px solid rgba(148, 163, 184, 0.65);
+            border-radius: 16px;
+            padding: 1.4rem;
+            text-align: center;
+            box-shadow: 0 12px 32px rgba(15,23,42,0.08);
+        }
+        .metric-card-value {
+            font-size: 2.15rem;
+            line-height: 1;
+            font-weight: 800;
+            color: var(--color-primary);
+        }
+        .metric-card-label {
+            font-size: .9rem;
+            color: var(--color-text-secondary);
+            margin-top: 0.25rem;
+        }
+        .details-tabs {
+            border-bottom: 1px solid rgba(148, 163, 184, 0.6);
+        }
+        .details-tabs button {
+            padding: .75rem 0.25rem;
+            margin-right: 1.5rem;
+            font-weight: 600;
+            color: var(--color-text-secondary);
+            border-bottom: 3px solid transparent;
+            transition: all .3s;
+            background: transparent;
+        }
+        .details-tabs button.active {
+            color: var(--color-text-primary);
+            border-bottom-color: var(--color-primary);
+        }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; animation: contentFadeIn .5s ease; }
+
+        @keyframes fadeIn{from{opacity:0}to{opacity:1}}
+        @keyframes contentFadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+        @keyframes slideIn{from{opacity:0;transform:translateY(30px) scale(0.98)}to{opacity:1;transform:translateY(0) scale(1)}}
+
+        /* Chat Widget */
+        .chat-launcher {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 80;
+            background: radial-gradient(circle at top left, #38bdf8, #0ea5e9);
+            color: #fff;
+            border: none;
+            border-radius: 999px;
+            padding: 0.85rem 1.7rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 700;
+            box-shadow: 0 20px 55px rgba(56, 189, 248, 0.6);
+            cursor: pointer;
+            transition: transform 0.25s ease, box-shadow 0.25s ease, filter 0.25s ease;
+        }
+        .chat-launcher svg {
+            width: 1.25rem;
+            height: 1.25rem;
+        }
+        .chat-launcher:hover {
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: 0 26px 65px rgba(56, 189, 248, 0.7);
+            filter: saturate(1.1);
+        }
+        .chat-launcher:focus-visible {
+            outline: 3px solid var(--color-accent-strong);
+            outline-offset: 4px;
+        }
+
+        .chat-panel {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: min(360px, 90vw);
+            background: linear-gradient(160deg, rgba(255,255,255,0.98), rgba(240,249,255,0.98));
+            border-radius: 22px;
+            border: 1px solid rgba(148, 163, 184, 0.7);
+            box-shadow:
+              0 30px 90px rgba(15,23,42,0.35),
+              0 0 0 1px rgba(255,255,255,0.95) inset;
+            transform: translateX(calc(100% + 3rem));
+            transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+            z-index: 90;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            pointer-events: none;
+        }
+        .chat-panel.open {
+            transform: translateX(0);
+            pointer-events: auto;
+        }
+        .chat-panel__header {
+            background: radial-gradient(circle at top left, rgba(56,189,248,0.9), rgba(59,130,246,0.9));
+            color: #fff;
+            padding: 1.25rem 1.5rem 1rem;
+            position: relative;
+        }
+        .chat-panel__header h3 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin: 0;
+        }
+        .chat-panel__header p {
+            font-size: 0.85rem;
+            margin-top: 0.35rem;
+            opacity: 0.88;
+        }
+        .chat-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.15);
+            border: 1px solid rgba(255,255,255,0.35);
+            color: #fff;
+            display: grid;
+            place-items: center;
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+        .chat-close:hover {
+            background: rgba(255,255,255,0.4);
+            color: var(--color-primary-hover);
+        }
+        .chat-close:focus-visible {
+            outline: 3px solid rgba(255,255,255,0.75);
+            outline-offset: 3px;
+        }
+        .chat-body {
+            padding: 1rem 1.25rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        .chat-messages {
+            max-height: 280px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            padding-right: 0.25rem;
+        }
+        .chat-messages::-webkit-scrollbar {
+            width: 6px;
+        }
+        .chat-messages::-webkit-scrollbar-thumb {
+            background: rgba(148, 163, 184, 0.7);
+            border-radius: 999px;
+        }
+        .chat-message {
+            display: inline-flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+        }
+        .chat-message__bubble {
+            padding: 0.75rem 1rem;
+            border-radius: 14px;
+            box-shadow: 0 10px 26px rgba(15,23,42,0.12);
+            line-height: 1.4;
+            font-size: 0.95rem;
+            white-space: pre-wrap;
+        }
+        .chat-message.assistant .chat-message__bubble {
+            background: rgba(248, 250, 252, 0.96);
+            color: var(--color-text-primary);
+            border: 1px solid rgba(148, 163, 184, 0.7);
+        }
+        .chat-message.user {
+            justify-content: flex-end;
+        }
+        .chat-message.user .chat-message__bubble {
+            background: radial-gradient(circle at top left, #38bdf8, #0ea5e9);
+            color: #fff;
+            border-radius: 16px 16px 4px 16px;
+        }
+        .chat-form {
+            border-top: 1px solid rgba(148, 163, 184, 0.6);
+            background: rgba(248,250,252,0.98);
+            padding: 0.85rem 1.25rem 1.25rem;
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 0.75rem;
+        }
+        .chat-form input[type="text"] {
+            background: #ffffff;
+            border: 1px solid rgba(148, 163, 184, 0.8);
+            border-radius: 999px;
+            padding: 0.65rem 1rem;
+            font-size: 0.95rem;
+            color: var(--color-text-primary);
+        }
+        .chat-form input[type="text"]:focus {
+            outline: none;
+            border-color: rgba(56, 189, 248, 0.8);
+            box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.25);
+        }
+        .chat-submit {
+            background: radial-gradient(circle at top left, #38bdf8, #0ea5e9);
+            color: #fff;
+            border: none;
+            border-radius: 999px;
+            padding: 0.65rem 1.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            box-shadow: 0 14px 30px rgba(56, 189, 248, 0.55);
+        }
+        .chat-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 18px 40px rgba(56, 189, 248, 0.7);
+        }
+        .chat-submit:focus-visible {
+            outline: 3px solid var(--color-accent-strong);
+            outline-offset: 3px;
+        }
+        .chat-status {
+            font-size: 0.75rem;
+            color: var(--color-text-secondary);
+            text-align: center;
+        }
+        @media (max-width: 640px) {
+            .chat-launcher {
+                right: 1.25rem;
+                bottom: 1.5rem;
+            }
+            .chat-panel {
+                right: 0.75rem;
+                bottom: 1.5rem;
+            }
+        }
+
+        .reveal{opacity:0;transform:translateY(35px);transition:opacity .8s ease-out,transform .8s ease-out}
+        .reveal.visible{opacity:1;transform:translateY(0)}
+
+        .main-container{max-width:1400px; margin: 0 auto;}
+
+        /* Media carousel styles */
+        .media-viewer{position:relative;width:100%;max-width:1100px;margin-inline:auto}
+        .media-stage{
+            position:relative;
+            width:100%;
+            aspect-ratio:16/9;
+            border-radius:16px;
+            overflow:hidden;
+            background:linear-gradient(145deg,#eef2ff,#e0f2fe);
+            display:grid;
+            place-items:center;
+        }
+        .media-stage img{width:100%;height:100%;object-fit:contain;cursor:zoom-in;user-select:none;-webkit-user-drag:none}
+
+        .media-controls{position:absolute;inset:0;display:flex;align-items:center;justify-content:space-between;padding:.75rem;pointer-events:none}
+        .media-btn{pointer-events:auto;width:42px;height:42px;display:grid;place-items:center;border-radius:9999px;background:rgba(255,255,255,.92);border:1px solid rgba(148,163,184,.8);color:#0f172a;cursor:pointer;transition:transform .15s ease,background .15s ease,opacity .15s ease;backdrop-filter:blur(12px) saturate(160%)}
+        .media-btn:hover{transform:scale(1.06);background:#fff}
+        .media-btn:disabled{opacity:.4;cursor:not-allowed}
+        .media-meta{margin-top:.6rem;display:flex;align-items:center;justify-content:space-between;gap:.75rem;color:#334155}
+        .media-pager{font-variant-numeric:tabular-nums;opacity:.85}
+
+        .lightbox{position:fixed;inset:0;z-index:9999;display:none;background:rgba(15,23,42,.7);backdrop-filter:blur(12px) saturate(150%)}
+        .lightbox.open{display:grid}
+        .lightbox-inner{position:relative;width:min(96vw,1400px);height:min(92vh,860px);margin:auto;display:grid;grid-template-rows:1fr auto;gap:.75rem}
+        .lightbox-stage{position:relative;width:100%;height:100%;border-radius:20px;overflow:hidden;background:#020617;display:grid;place-items:center;border:1px solid rgba(148,163,184,.8)}
+        .lightbox-stage img{width:100%;height:100%;object-fit:contain;user-select:none;-webkit-user-drag:none}
+        .lightbox-controls{position:absolute;inset:0;display:flex;align-items:center;justify-content:space-between;padding:1rem;pointer-events:none}
+        .lightbox-btn{pointer-events:auto;width:46px;height:46px;border-radius:9999px;display:grid;place-items:center;background:rgba(255,255,255,.95);border:1px solid rgba(15,23,42,.3);color:#0f172a;cursor:pointer;transition:transform .15s ease,background .15s ease;backdrop-filter:blur(10px) saturate(160%)}
+        .lightbox-btn:hover{transform:scale(1.06);background:#fff}
+        .lightbox-topbar{display:flex;justify-content:space-between;align-items:center;color:#e5e7eb;font-size:.95rem}
+        .lightbox-topbar .close{width:42px;height:42px;border-radius:9999px;display:grid;place-items:center;background:rgba(255,255,255,.96);color:#0f172a;border:1px solid rgba(15,23,42,.25);cursor:pointer;transition:transform .15s ease,background .15s ease}
+        .lightbox-topbar .close:hover{transform:scale(1.06);background:#fff}
+
+        footer {
+          background: linear-gradient(to top, rgba(248,250,252,0.9), rgba(248,250,252,0));
+        }
+        footer p {
+          font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body class="antialiased" data-chat-store="https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec">
+    <!-- Futuristic background layers -->
+    <div class="bg-grid-layer"></div>
+    <div class="bg-orbit-layer"></div>
+
+    <div class="content-container">
+        <header>
+            <div class="header-inner">
+                <a href="#" class="header-logo">Sphoorthy Masa</a>
+                <nav class="hidden md:flex space-x-1 text-base font-medium items-center">
+                    <a href="#about"><span>About</span></a>
+                    <a href="#skills"><span>Skills</span></a>
+                    <a href="#testimonials"><span>Testimonials</span></a>
+                    <a href="#why-me-contact"><span>Contact</span></a>
+                </nav>
+            </div>
+        </header>
+
+        <main>
+            <section id="hero-carousel" class="reveal">
+                <div class="hero-track"></div>
+            </section>
+
+            <div class="main-container">
+                <section id="about" class="content-section reveal">
+                    <div class="card about-card">
+                        <div class="grid lg:grid-cols-[1fr,1.25fr] gap-12 items-center">
+                            <div class="about-photo-wrapper">
+                                <div class="about-photo-frame">
+                                    <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=900&q=80" alt="Portrait of Sphoorthy Masa" class="about-photo">
+                                    <span class="about-photo-label">Lead UX Researcher</span>
+                                </div>
+                            </div>
+                            <div class="space-y-6">
+                                <div class="space-y-3">
+                                    <h3 class="text-3xl font-bold text-black">About Me</h3>
+                                    <p class="text-lg text-gray-300 max-w-2xl">I connect human stories to product decisions, helping cross-functional teams move from uncertainty to confident, insight-led action.</p>
+                                </div>
+                                <div class="about-highlights">
+                                    <article class="about-highlight">
+                                        <h4>Strategic Partner</h4>
+                                        <p>Builds roadmaps that align research momentum with business outcomes.</p>
+                                    </article>
+                                    <article class="about-highlight">
+                                        <h4>Mixed-Methods Expert</h4>
+                                        <p>Pairs generative and evaluative approaches to uncover opportunity and reduce risk.</p>
+                                    </article>
+                                    <article class="about-highlight">
+                                        <h4>Team Catalyst</h4>
+                                        <p>Translates insights into stories and rituals that energize designers, PMs, and engineers.</p>
+                                    </article>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                
+                <section id="skills" class="content-section reveal">
+                    <div class="card">
+                        <div class="text-center mb-8">
+                            <h3 class="text-4xl font-bold text-black">Skills & Expertise</h3>
+                            <p class="text-lg text-gray-400 mt-2">A comprehensive look at my research methodologies, tools, and frameworks.</p>
+                        </div>
+                        <div class="flex flex-col md:flex-row gap-8">
+                            <div class="flex-1 p-6 bg-gray-800/50 rounded-xl border border-gray-700/50">
+                                <h4 class="text-2xl font-semibold text-black mb-4">Research Methodologies</h4>
+                                <div class="space-y-4">
+                                    <div>
+                                        <h5 class="text-lg font-bold text-black mb-2">Quantitative</h5>
+                                        <div class="flex flex-wrap gap-2">
+                                            <span class="tag-badge">Surveys</span>
+                                            <span class="tag-badge">A/B Testing</span>
+                                            <span class="tag-badge">Data Analysis</span>
+                                            <span class="tag-badge">First-click Testing</span>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <h5 class="text-lg font-bold text-black mb-2">Qualitative</h5>
+                                        <div class="flex flex-wrap gap-2">
+                                            <span class="tag-badge">User Interviews</span>
+                                            <span class="tag-badge">Usability testing</span>
+                                            <span class="tag-badge">Card Sorting</span>
+                                            <span class="tag-badge">Contextual Interviews</span>
+                                            <span class="tag-badge">Focus Groups</span>
+                                            <span class="tag-badge">Journey mapping</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex-1 p-6 bg-gray-800/50 rounded-xl border border-gray-700/50">
+                                <h4 class="text-2xl font-semibold text-black mb-4">Tools & Software</h4>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="tag-badge">UserZoom</span>
+                                    <span class="tag-badge">User Interviews</span>
+                                    <span class="tag-badge">UserTesting</span>
+                                    <span class="tag-badge">Qualtrics</span>
+                                    <span class="tag-badge">Figma</span>
+                                    <span class="tag-badge">Hotjar</span>
+                                    <span class="tag-badge">Dovetail</span>
+                                </div>
+
+                                <h4 class="text-2xl font-semibold text-black mt-8 mb-4">Process & Frameworks</h4>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="tag-badge">Agile</span>
+                                     <span class="tag-badge">Waterfall</span>
+                                    <span class="tag-badge">Dual-track Agile</span>
+                                    <span class="tag-badge">Jobs To Be Done (JTBD)</span>
+                                    <span class="tag-badge">Design Thinking</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="why-me-contact" class="content-section reveal">
+                    <div class="card p-12 flex flex-col md:flex-row items-center gap-12">
+                        <div class="md:w-1/2 text-left">
+                            <h3 class="text-3xl font-bold text-black mb-4">Why Me?</h3>
+                            <div class="text-lg text-gray-300 space-y-4 max-w-prose">
+                                <p>Good research doesn't just inform. It transforms how teams think, build, and connect with their users. I focus on turning insights into action and action into impact.</p>
+                                <p class="font-semibold text-2xl mt-6 text-black">User insights shouldn't be boring. And neither should your researcher. </p>
+                            </div>
+                        </div>
+                        <div class="md:w-px h-full bg-gray-200 md:block hidden"></div>
+                        <div class="md:w-1/2 text-center">
+                            <h3 class="text-4xl font-bold text-black mb-4">Let's Build Something Meaningful</h3>
+                            <p class="text-lg text-gray-300 mb-8">If you're building a team where research plays a strategic role, I'd love the opportunity to contribute.</p>
+                            <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                                <a href="https://www.linkedin.com/in/smasa" target="_blank" rel="noopener noreferrer" class="btn-contact btn-linkedin">
+                                    LinkedIn
+                                </a>
+                                <a href="mailto:Sphoorthy.Masa@outlook.com" class="btn-contact btn-email">
+                                    Email Me
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                
+                <section id="testimonials" class="content-section reveal">
+                    <div class="text-center pb-8"><h3 class="text-4xl font-bold text-black">Testimonials</h3></div>
+                    <div id="testimonial-scroller" class="testimonial-scroller"></div>
+                </section>
+            </div>
+        </main>
+
+        <footer class="text-center py-10 mt-10 border-t border-gray-200">
+            <p class="text-gray-400">&copy; 2019 Sphoorthy Masa. All Rights Reserved.</p>
+        </footer>
+    </div>
+    
+    <div id="project-modal">
+        <div class="modal-content">
+            <header class="modal-header">
+                <h3>Project Details</h3>
+                <button class="modal-close-btn" aria-label="Close">&times;</button>
+            </header>
+            <div class="modal-body">
+            </div>
+        </div>
+    </div>
+
+    <button id="chat-toggle" class="chat-launcher" type="button" aria-expanded="false" aria-controls="chat-panel">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5A8.5 8.5 0 0 1 21 11v.5z" />
+        </svg>
+        Chat
+    </button>
+
+    <aside id="chat-panel" class="chat-panel" aria-hidden="true" aria-label="Sphoorthy's chat companion">
+        <div class="chat-panel__header">
+            <h3>Sphoorthy's Spark</h3>
+            <p>Your whimsical UX research sidekick.</p>
+            <button type="button" class="chat-close" aria-label="Close chat">&times;</button>
+        </div>
+        <div class="chat-body">
+            <div id="chat-messages" class="chat-messages" role="log" aria-live="polite" aria-relevant="additions"></div>
+            <div id="chat-status" class="chat-status" aria-live="polite"></div>
+        </div>
+        <form id="chat-form" class="chat-form" autocomplete="off">
+            <label for="chat-input" class="sr-only">Ask a question</label>
+            <input id="chat-input" type="text" name="message" placeholder="Ask me about the work..." required>
+            <button class="chat-submit" type="submit">Send</button>
+        </form>
+    </aside>
+
+    <!-- JS: unchanged logic, only visuals altered via CSS -->
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        /* ========== Header Scroll Effect ========== */
+        const header=document.querySelector('header');
+        let lastScrollTop=0;
+        window.addEventListener('scroll',()=>{
+            let st=window.pageYOffset||document.documentElement.scrollTop;
+            if(st>lastScrollTop&&st>100){header.classList.add('hidden');}
+            else if(st<100){header.classList.remove('hidden');}
+            lastScrollTop=st<=0?0:st;
+        },false);
+
+        /* ========== Reveal on Scroll ========== */
+        const observer=new IntersectionObserver((entries)=>{
+            entries.forEach(entry=>{ if(entry.isIntersecting) entry.target.classList.add('visible'); });
+        },{threshold:0.1});
+        document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
+
+        /* ========== Chat Companion ========== */
+        const chatToggleBtn=document.getElementById('chat-toggle');
+        const chatPanel=document.getElementById('chat-panel');
+        const chatCloseBtn=chatPanel?chatPanel.querySelector('.chat-close'):null;
+        const chatForm=document.getElementById('chat-form');
+        const chatInput=document.getElementById('chat-input');
+        const chatMessages=document.getElementById('chat-messages');
+        const chatStatus=document.getElementById('chat-status');
+        const adminEndpoint=(document.body&&document.body.dataset)?document.body.dataset.chatStore:''; 
+        const whimsicalOpeners=[
+            "✨ Well hello there, curious comet!",
+            "🌟 Ahoy! You've summoned Sphoorthy's sparkly sidekick.",
+            "🎈 Boop! Let's float through these insights together.",
+            "🦄 Consider me your research unicorn on call.",
+            "🚀 Buckle up, we've got delightful data to explore!"
+        ];
+        let siteContext='';
+        let isChatOpen=false;
+
+        const summarise=(text,maxLength=320)=>{
+            if(!text) return '';
+            if(text.length<=maxLength) return text.trim();
+            const clipped=text.slice(0,maxLength);
+            return `${clipped.replace(/\s+\S*$/,'').trim()}…`;
+        };
+
+        const appendMessage=(role,text)=>{
+            if(!chatMessages) return;
+            const wrap=document.createElement('div');
+            wrap.className=`chat-message ${role}`;
+            const bubble=document.createElement('div');
+            bubble.className='chat-message__bubble';
+            bubble.textContent=text;
+            wrap.appendChild(bubble);
+            chatMessages.appendChild(wrap);
+            chatMessages.scrollTop=chatMessages.scrollHeight;
+        };
+
+        const toggleChat=(force)=>{
+            if(!chatPanel||!chatToggleBtn) return;
+            const nextState=typeof force==='boolean'?force:!isChatOpen;
+            isChatOpen=nextState;
+            chatPanel.classList.toggle('open',isChatOpen);
+            chatPanel.setAttribute('aria-hidden',String(!isChatOpen));
+            chatToggleBtn.setAttribute('aria-expanded',String(isChatOpen));
+            if(isChatOpen){
+                window.requestAnimationFrame(()=>{
+                    chatInput&&chatInput.focus({preventScroll:true});
+                });
+            }
+        };
+
+        const sendQuestionToAdmin=async (question)=>{
+            if(!question||!adminEndpoint) return;
+            try{
+                await fetch(adminEndpoint,{
+                    method:'POST',
+                    headers:{'Content-Type':'application/json'},
+                    body:JSON.stringify({question,askedAt:new Date().toISOString()})
+                });
+            }catch(err){
+                console.warn('Chat archive request failed (safe to ignore for visitors).',err);
+            }
+        };
+
+        const craftResponse=(userMessage)=>{
+            const opener=whimsicalOpeners[Math.floor(Math.random()*whimsicalOpeners.length)]||'Hello there!';
+            const contextLine=siteContext?`Here's a fresh nugget from Sphoorthy's world: ${summarise(siteContext)}`:'I have a whole galaxy of UX tales ready for you.';
+            const closing="Feel free to toss another question my way whenever inspiration strikes!";
+            return `${opener}\n\nYou asked: ${userMessage}\n\n${contextLine}\n\n${closing}`;
+        };
+
+        const handleUserMessage=async (message)=>{
+            if(!message) return;
+            chatStatus&&(chatStatus.textContent='Sketching a playful reply…');
+            appendMessage('user',message);
+            await sendQuestionToAdmin(message);
+            const reply=craftResponse(message);
+            appendMessage('assistant',reply);
+            chatStatus&&(chatStatus.textContent='');
+        };
+
+        const loadContext=async ()=>{
+            const fallback="Sphoorthy Masa is a senior UX researcher who transforms ambiguity into strategic clarity across entertainment, streaming, and SaaS platforms.";
+            try{
+                const response=await fetch('https://sphoorthymasa.webnode.page/');
+                if(!response.ok) throw new Error(`Status ${response.status}`);
+                const html=await response.text();
+                const parser=new DOMParser();
+                const doc=parser.parseFromString(html,'text/html');
+                const paragraphs=Array.from(doc.querySelectorAll('p'))
+                    .map(p=>p.textContent.trim())
+                    .filter(Boolean)
+                    .slice(0,8);
+                siteContext=paragraphs.join(' ');
+            }catch(err){
+                siteContext=fallback;
+                console.warn('Unable to fetch live portfolio context for chat. Using fallback.',err);
+            }
+        };
+
+        if(chatToggleBtn&&chatPanel&&chatForm&&chatInput&&chatMessages){
+            appendMessage('assistant',"Hi! I'm Spark, your whimsical guide to Sphoorthy's research adventures. Ask away!");
+            loadContext();
+            chatToggleBtn.addEventListener('click',()=>toggleChat());
+            chatForm.addEventListener('submit',(event)=>{
+                event.preventDefault();
+                const value=(chatInput.value||'').trim();
+                if(!value) return;
+                chatInput.value='';
+                handleUserMessage(value);
+            });
+            chatPanel.addEventListener('transitionend',()=>{
+                if(isChatOpen){
+                    chatMessages.scrollTop=chatMessages.scrollHeight;
+                }
+            });
+            if(chatCloseBtn){
+                chatCloseBtn.addEventListener('click',()=>toggleChat(false));
+            }
+            document.addEventListener('keydown',(evt)=>{
+                if(evt.key==='Escape'&&isChatOpen){
+                    toggleChat(false);
+                }
+            });
+        }
+
+        /* ================= Projects (FULL ORIGINAL DATA + HIGH-RES IMAGES) ================= */
+        const projects=[
+            { 
+                id:'guide',
+                title:"Reinventing The TV Guide",
+                hook:"A strategic research initiative to unify user experiences across two major platforms, turning a point of friction into a driver for engagement and revenue.",
+                outcome:"~$7.46M Estimated Annual Impact",
+                tags:['Strategic Research','Data-Driven Insights','Business Impact'],
+                images:["images/Guide/7.png"],
+                content:{
+                    metrics:[
+                        {value:"~$7.46M",label:"Estimated Annual Value Impact"},
+                        {value:"90%",label:"Target Task Success Rate"},
+                        {value:"12%",label:"Reduction in CX Complaints"}
+                    ],
+                    overview:`<div class="text-left space-y-6"><div><h5 class="font-bold text-black text-lg">Background</h5><p class="text-gray-300 mt-1">The guide sits at the heart of content discovery, but had evolved in parallel across Sling TV and Dish TV, creating fragmented experiences.</p></div><div><h5 class="font-bold text-black text-lg">The Challenge</h5><p class="text-gray-300 mt-1">How can we unify the guide experience to enhance usability and personalization without alienating loyal users on two very different platforms?</p></div><div><h5 class="font-bold text-black text-lg">Key Objectives</h5><ul class="list-disc list-inside pl-4 space-y-2 mt-2"><li>Identify user frustrations and unmet needs across both platforms.</li><li>Uncover shared pain points to guide a unified design strategy.</li><li>Deliver actionable recommendations that balance user needs and business goals.</li></ul></div></div>`,
+                    methodology:`<h4>My Research Process & Tools</h4><div class="methodology-container mt-6">
+                        <div class="methodology-item">
+                            <h5>1. Discovery & Planning</h5>
+                            <p>Stakeholder Interviews, Data Analysis, and Defining Project Scope.</p>
+                            <div class="mt-4 flex flex-wrap gap-2"><span class="tag-badge">UserZoom</span><span class="tag-badge">Google Analytics</span><span class="tag-badge">JIRA</span></div>
+                        </div>
+                        <div class="methodology-item">
+                            <h5>2. Generative Research</h5>
+                            <p>In-depth User Interviews to uncover behaviors and motivations.</p>
+                            <div class="mt-4 flex flex-wrap gap-2"><span class="tag-badge">User Interviews</span><span class="tag-badge">Lookback</span><span class="tag-badge">Google Meet</span></div>
+                        </div>
+                        <div class="methodology-item">
+                            <h5>3. Synthesis & Ideation</h5>
+                            <p>Mapping insights and collaborating with design and product teams.</p>
+                            <div class="mt-4 flex flex-wrap gap-2"><span class="tag-badge">Miro</span><span class="tag-badge">Figma</span></div>
+                        </div>
+                        <div class="methodology-item">
+                            <h5>4. Validation & Delivery</h5>
+                            <p>Usability Testing and Handoff to Engineering teams.</p>
+                            <div class="mt-4 flex flex-wrap gap-2"><span class="tag-badge">UserTesting.com</span><span class="tag-badge">Figma Prototypes</span><span class="tag-badge">Confluence</span></div>
+                        </div>
+                    </div>`,
+                    analysis:`<h4>Target Audience & Segments</h4><div class="flex flex-col md:flex-row gap-4 mt-4 text-left"><div class="flex-1 p-4 bg-black/20 rounded-lg border border-black/10"><h5 class="font-bold text-black">DISH TV Subscribers (65+)</h5><p class="text-sm text-gray-300">Tolerate outdated UI but struggle with hidden features; often have accessibility needs.</p></div><div class="flex-1 p-4 bg-black/20 rounded-lg border border-black/10"><h5 class="font-bold text-black">Sling TV Subscribers (~35)</h5><p class="text-sm text-gray-300">Tech-savvy, expect fast, intuitive interfaces and quick content access.</p></div></div><h4 class="mt-8">Key Quantitative Insights</h4><div class="grid md:grid-cols-2 gap-4 mt-4 text-gray-300 text-left"><div class="insight-card"><h5>1. High Engagement, Low Conversion</h5><ul class="text-sm list-disc list-inside my-2 space-y-1"><li><b>Sling TV:</b> 79% engagement &rarr; 56% playback</li><li><b>DISH TV:</b> 86% engagement &rarr; 48% playback</li></ul><p class="text-sm text-lime-200">🔍 Insight: Strong adoption, but poor discoverability leads to drop-offs.</p></div><div class="insight-card"><h5>2. Underutilized Features</h5><ul class="text-sm list-disc list-inside my-2 space-y-1"><li>73% of sessions used the default "ALL" filter.</li><li>"Favorites" users had a 64% playback rate vs. 55% for others.</li></ul><p class="text-sm text-lime-200">🔍 Insight: Personalization improves engagement but is underused.</p></div><div class="insight-card"><h5>3. High Drop-Offs in Short Sessions</h5><ul class="text-sm list-disc list-inside my-2 space-y-1"><li>44% of Sling guide sessions ended without playback.</li><li>Most of these non-playback sessions lasted &lt;20 seconds.</li></ul><p class="text-sm text-lime-200">🔍 Insight: Users abandon quickly, suggesting poor content surfacing.</p></div><div class="insight-card"><h5>4. Habitual Navigation (DISH)</h5><ul class="text-sm list-disc list-inside my-2 space-y-1"><li>46% of users navigated vertically by habit.</li><li>Only 8% used faster horizontal navigation by time.</li></ul><p class="text-sm text-lime-200">🔍 Insight: Users may not be aware of more efficient navigation options.</p></div></div>`,
+                    results:`<p class="text-center text-lg">The research insights directly led to iterative design improvements, validating each solution through rigorous testing to ensure it met user needs and business goals.</p><h4 class="mt-8">Financial Impact</h4><div class="grid md:grid-cols-2 lg:grid-cols-4 gap-4 mt-4 text-gray-300"><div class="stat-card"><div class="stat-number">~$5.83M</div><div class="stat-description">from Increased Retention</div></div><div class="stat-card"><div class="stat-number">~$1.94M</div><div class="stat-description">from Feature Upsells</div></div><div class="stat-card"><div class="stat-number">~$193k</div><div class="stat-description">from Ad Revenue</div></div><div class="stat-card"><div class="stat-number">~$63k</div><div class="stat-description">from Ops Savings</div></div></div>`,
+                    media: `
+                      <h4 class="text-xl font-bold text-slate-900">Media</h4>
+                      <div class="media-viewer mt-3" data-media='${JSON.stringify(
+                        Array.from({length:16},(_,i)=>`images/Guide/${i+1}.png`)
+                      )}'>
+                        <div class="media-stage">
+                          <img alt="Guide 1" />
+                          <div class="media-controls">
+                            <button class="media-btn prev" aria-label="Previous">&#10094;</button>
+                            <button class="media-btn next" aria-label="Next">&#10095;</button>
+                          </div>
+                        </div>
+                        <div class="media-meta">
+                          <div class="media-caption">Guide 1</div>
+                          <div class="media-pager"><span class="cur">1</span> / <span class="total">16</span></div>
+                        </div>
+                      </div>
+                      <p class="mt-4 text-sm text-center text-slate-600">
+                        Click the image to view full-screen. Use ← → keys to navigate. Press ESC to close.
+                      </p>
+                    `
+                }
+            },
+            {
+                id:'gundersen',
+                title:"Gundersen Pharmacy",
+                hook:"Streamlining prescription refills by empowering patients and reducing manual work for pharmacy staff, resulting in significant cost savings and improved patient satisfaction.",
+                outcome:"Achieved 12,334+ Active App Users within 6 months.",
+                tags:['Workflow Analysis','Adoption Strategy','Usability Testing'],
+                images:["images/Gundersen/6.png"],
+                content:{
+                    metrics:[
+                        { value:"12,334+", label:"Active App Users" },
+                        { value:"36%", label:"Refill Volume through App" },
+                        { value:"$702k+", label:"Annual Labor Cost Savings" }
+                    ],
+                    overview:`<div class="text-left space-y-6">
+                        <div>
+                            <h5 class="font-bold text-black text-lg">Background</h5>
+                            <p class="text-gray-300 mt-1">The pharmacy app was designed to simplify and modernize the prescription refill experience. It aimed to reduce the repetitive, manual burden on pharmacists and empower patients with self-service medication management.</p>
+                        </div>
+                        <div>
+                            <h5 class="font-bold text-black text-lg">Research Goals</h5>
+                            <ul class="list-disc list-inside pl-4 space-y-2 mt-2">
+                                <li><b>Boost Adoption:</b> Achieve 10,000+ active app users within 6 months.</li>
+                                <li><b>Drive Prescription Orders:</b> Convert 25% of monthly refills (11,250 orders) through the app.</li>
+                                <li><b>Automate Communications:</b> Deliver 10,000+ refill reminders & status messages monthly.</li>
+                                <li><b>Reduce Staff Burden:</b> Decrease pharmacist time spent on refill calls by 50%, and reduce medical staff back-and-forth.</li>
+                                <li><b>Cost Optimization:</b> Recover up to $1M/year in lost labor time.</li>
+                            </ul>
+                        </div>
+                    </div>`,
+                    methodology:`<div class="space-y-6">
+                        <p class="text-sm text-gray-300">Our research was a blend of qualitative and quantitative methods to understand both the user experience and the internal workflow challenges.</p>
+                        <h4 class="font-bold text-black text-lg mb-2">Manual Workflow </h4>
+                        <p class="text-sm text-gray-300">The manual process was time-consuming and inefficient. Pharmacists spent an average of 3.5 minutes per refill, totaling over 2,600 hours/month, which translated to significant lost labor time.</p>
+                        <div class="methodology-container mt-4">
+                            <div class="methodology-item">
+                                <h5>1. Workflow & Stakeholder Analysis</h5>
+                                <p>Interviews with pharmacists, RNs, and MAs to map the manual refill process.</p>
+                                <div class="mt-4 flex flex-wrap gap-2"><span class="tag-badge">Stakeholder Interviews</span><span class="tag-badge">Process Mapping</span></div>
+                            </div>
+                            <div class="methodology-item">
+                                <h5>2. Usability & Heuristic Evaluation</h5>
+                                <p>Tested the existing app with both patients and staff to identify pain points and opportunities.</p>
+                                <div class="mt-4 flex flex-wrap gap-2"><span class="tag-badge">Heuristic Analysis</span><span class="tag-badge">Usability Testing</span></div>
+                            </div>
+                            <div class="methodology-item">
+                                <h5>3. Discovery & Synthesis</h5>
+                                <p>Uuncovered a key problem: most patients were unaware the app existed. This shifted our focus from product improvement to a marketing and awareness strategy.</p>
+                                <div class="mt-4 flex flex-wrap gap-2"><span class="tag-badge">Patient Interviews</span><span class="tag-badge">Journey Mapping</span></div>
+                            </div>
+                        </div>
+                    </div>`,
+                    analysis:`<div class="space-y-8">
+                        <div>
+                            <h4 class="font-bold text-black text-lg mb-4">Key Insights from Analysis</h4>
+                            <div class="grid md:grid-cols-2 gap-4 mt-4 text-left">
+                                <div class="insight-card p-4">
+                                    <h5 class="font-bold text-black mb-2">Minimalist UI & High Usability</h5>
+                                    <p class="text-sm text-gray-300">The app's core functionality was clear, allowing users to refill prescriptions with ease. <b>Task success rate was 95%.</b></p>
+                                </div>
+                                <div class="insight-card p-4">
+                                    <h5 class="font-bold text-black mb-2">Unexpected Awareness Gap</h5>
+                                    <p class="text-sm text-gray-300">A major finding: many patients were simply <b>unaware the app existed.</b> This shifted our focus from product improvement to a marketing and awareness strategy.</p>
+                                </div>
+                                <div class="insight-card p-4">
+                                    <h5 class="font-bold text-black mb-2">Low Emotional Engagement</h5>
+                                    <p class="text-sm text-gray-300">A SUS Score of 78 indicated solid usability but highlighted a <b>lack of emotional engagement</b> due to the app's basic visual design.</p>
+                                </div>
+                                <div class="insight-card p-4">
+                                    <h5 class="font-bold text-black mb-2">Automated Communications</h5>
+                                    <p class="text-sm text-gray-300">The system lacked features to reduce the repetitive, manual burden on pharmacists and their outbound calls.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>`,
+                    results:`<div class="space-y-8">
+                        <p class="text-center text-lg text-gray-300">Our research led to a strategic awareness campaign that directly addressed the adoption problem and produced significant business impact.</p>
+                        <h4 class="font-bold text-black text-lg">Key Outcomes</h4>
+                        <div class="overflow-x-auto relative rounded-lg border border-black/10 mt-4">
+                            <table class="w-full text-sm text-left text-gray-400">
+                                <thead class="text-xs text-gray-2 00 uppercase bg-gray-800/50">
+                                    <tr>
+                                        <th scope="col" class="py-3 px-6 text-center">Metric</th>
+                                        <th scope="col" class="py-3 px-6 text-center">Outcome</th>
+                                        <th scope="col" class="py-3 px-6 text-center">Target</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="bg-gray-900/40 border-b border-gray-700">
+                                        <th scope="row" class="py-4 px-6 font-medium text-black blackspace-nowrap">Active App Users</th>
+                                        <td class="py-4 px-6 text-center font-bold text-lime-400">12,334</td>
+                                        <td class="py-4 px-6 text-center font-bold text-lime-400">10,000+</td>
+                                    </tr>
+                                    <tr class="bg-gray-900/40 border-b border-gray-700">
+                                        <th scope="row" class="py-4 px-6 font-medium text-black blackspace-nowrap">Monthly Refills via App</th>
+                                        <td class="py-4 px-6 text-center font-bold text-lime-400">16,476</td>
+                                        <td class="py-4 px-6 text-center font-bold text-lime-400">11,250</td>
+                                    </tr>
+                                    <tr class="bg-gray-900/40">
+                                        <th scope="row" class="py-4 px-6 font-medium text-black blackspace-nowrap">Annual Labor Savings</th>
+                                        <td class="py-4 px-6 text-center font-bold text-lime-400">$702,000+</td>
+                                        <td class="py-4 px-6 text-center font-bold text-lime-400">$1M</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <p class="text-center text-lg mt-8 text-gray-300">By shifting our focus from product development to an awareness campaign, the app's adoption skyrocketed, resulting in significant cost savings and improved patient satisfaction.</p>
+                    </div>`,
+                   media: `
+                      <h4 class="text-xl font-bold text-slate-900">Media</h4>
+                      <div class="media-viewer mt-3" data-media='${JSON.stringify(
+                        Array.from({length:6},(_,i)=>`images/Gundersen/${i+1}.png`)
+                      )}'>
+                        <div class="media-stage">
+                          <img alt="Gundersen 1" />
+                          <div class="media-controls">
+                            <button class="media-btn prev" aria-label="Previous">&#10094;</button>
+                            <button class="media-btn next" aria-label="Next">&#10095;</button>
+                          </div>
+                        </div>
+                        <div class="media-meta">
+                          <div class="media-caption">Guide 1</div>
+                          <div class="media-pager"><span class="cur">1</span> / <span class="total">6</span></div>
+                        </div>
+                      </div>
+                      <p class="mt-4 text-sm text-center text-slate-600">
+                        Click the image to view full-screen. Use ← → keys to navigate. Press ESC to close.
+                      </p>
+                    `
+                }  
+            },
+            {
+                id:'live-rooms',
+                title:"Validating 'Live Rooms'",
+                hook:"An exciting concept for social TV viewing promised to make live content more engaging with chat, reactions, and interactive features. But before investing in building it, we needed to validate whether this idea aligned with how people actually watch live TV today.",
+                outcome:"Guided 'Go/No-Go' Decision",
+                tags:['Concept Testing','Behavioral Research'],
+                images:["images/liverooms/1.png"],
+                content:{
+                    metrics:[
+                        { value:"87%", label:"Liked interactive features" },
+                        { value:"76%", label:"Preferred second-screen" },
+                        { value:"56%", label:"Liked emoji reactions" },
+                        { value:"41%", label:"Liked quizzes" }
+                    ],
+                    overview:`<div class="text-left text-sm space-y-6">
+                        <div>
+                            <h5 class="font-bold text-black text-lg">Background</h5>
+                            <p class="text-gray-300 mt-1">Live Rooms is a conceptual feature aimed at enhancing real-time TV viewing with interactive social experiences. The idea is to allow users to chat, react with emojis, and participate in live trivia while watching their favorite shows or sport.</p>
+                        </div>
+                        <div>
+                            <h5 class="font-bold text-black text-lg">Research Goals</h5>
+                            <ul class="list-disc list-inside pl-4 space-y-2 mt-2">
+                                <li><b>Evaluate whether the Live Rooms concept resonates with users.</b></li>
+                                <li><b>Understand if real-time interaction can increase emotional investment, social connection, and engagement.</b></li>
+                                <li><b>Ensure these interactions do not disrupt the core viewing experience.</b></li>
+                                <li><b>Explore how users organically adopt these features across different content types (e.g., sports vs. reality shows).</b></li>
+                                <li><b>Explore adoption across different platforms (TV vs. mobile).</b></li>
+                            </ul>
+                        </div>
+                    </div>`,
+                    methodology:`<h4>My Research Process & Tools</h4>
+                        <div class="methodology-container mt-6">
+                            <div class="methodology-item">
+                                <h5>1. Concept Testing</h5>
+                                <p>4 Participants with experience in interactive streaming like Twitch, Youtube Live, etc. 4 Participants with no experience in interactive streaming.</p>
+                                <div class="mt-4 flex flex-wrap gap-2"><span class="tag-badge">User Interviews</span><span class="tag-badge">UserZoom</span><span class="tag-badge">Invision</span></div>
+                            </div>
+                            <div class="methodology-item">
+                                <h5>2. Live Product Test - Round 1 (NBA Game)</h5>
+                                <p>79 participants with varying age range. 95% participants responded to the feedback survey.</p>
+                                <div class="mt-4 flex flex-wrap gap-2"><span class="tag-badge">LiveLike</span><span class="tag-badge">UserZoom</span></div>
+                            </div>
+                            <div class="methodology-item">
+                                <h5>3. Live Product Test - Round 2 (Reality TV)</h5>
+                                <p>35 participants with 98% survey response rate.</p>
+                                <div class="mt-4 flex flex-wrap gap-2"><span class="tag-badge">LiveLike</span><span class="tag-badge">UserZoom</span></div>
+                            </div>
+                        </div>`,
+                    analysis:`<div class="space-y-8">
+                        <div>
+                            <h4 class="font-bold text-black text-lg mb-4">Initial Concept Insights</h4>
+                            <div class="grid md:grid-cols-2 gap-4 mt-4 text-left">
+                                <div class="insight-card p-4">
+                                    <h5 class="font-bold text-black mb-2">Interest in Social Features</h5>
+                                    <p class="text-sm text-gray-300">Users showed interest, but the ideal level and format of interaction remained unclear.</p>
+                                </div>
+                                <div class="insight-card p-4">
+                                    <h5 class="font-bold text-black mb-2">Second-Screen Behavior</h5>
+                                    <p class="text-sm text-gray-300">There is potential value in second-screen experiences, but we need to explore when and how users naturally engage.</p>
+                                </div>
+                                <div class="insight-card p-4">
+                                    <h5 class="font-bold text-black mb-2">Role of Interactive Elements</h5>
+                                    <p class="text-sm text-gray-300">Reactions and quizzes were received positively, but their role in sustained engagement is unknown.</p>
+                                </div>
+                                <div class="insight-card p-4">
+                                    <h5 class="font-bold text-black mb-2">User Behavior & Content Type</h5>
+                                    <p class="text-sm text-gray-300">The concept raised questions about how different user types would navigate this experience.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-black text-lg mb-4">Live Testing Insights</h4>
+                            <div class="grid md:grid-cols-2 gap-4 mt-4 text-left">
+                                <div class="insight-card p-4">
+                                    <h5 class="font-bold text-black mb-2">Control is Key</h5>
+                                    <p class="text-sm text-gray-300"><b>87%</b> of users liked interactive features but wanted control, like turning chat on/off.</p>
+                                </div>
+                                <div class="insight-card p-4">
+                                    <h5 class="font-bold text-black mb-2">Second-Screen Experience</h5>
+                                    <p class="text-sm text-gray-300"><b>76%</b> preferred using their phone to interact while watching on TV.</p>
+                                </div>
+                                <div class="insight-card p-4">
+                                    <h5 class="font-bold text-black mb-2">Positive Feedback on Interactive Elements</h5>
+                                    <p class="text-sm text-gray-300">Emoji reactions (<b>56%</b>) and quizzes (<b>41%</b>) boosted engagement and made the experience more fun.</p>
+                                </div>
+                                <div class="insight-card p-4">
+                                    <h5 class="font-bold text-black mb-2">Usability & Content Adaptation</h5>
+                                    <p class="text-sm text-gray-300"><b>40%</b> felt chat was overwhelming. Sports fans liked fast chat, while reality TV fans preferred polls and quizzes.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>`,
+                    results:`<div class="space-y-8">
+                        <p class="text-center text-lg text-gray-300">The Live Rooms concept was a clear win with high user engagement. The experience proved that interactive features can meaningfully enhance live TV viewing.</p>
+                        <h4 class="font-bold text-black text-lg">Business Impact</h4>
+                        <div class="grid md:grid-cols-3 gap-4 mt-4 text-gray-300 text-sm">
+                            <div class="panel p-4">
+                                <h5 class="font-bold text-black text-base mb-2 text-center">Jersey Shore Family Vacation</h5>
+                                <ul class="list-none space-y-1.5">
+                                    <li class="flex justify-between items-center"><span class="font-medium text-gray-400">Unique Viewers:</span><span class="text-black font-semibold">13,668</span></li>
+                                    <li class="flex justify-between items-center"><span class="font-medium text-gray-400">View Time (Hrs):</span><span class="text-black font-semibold">43,017</span></li>
+                                    <li class="flex justify-between items-center"><span class="font-medium text-gray-400">Hrs per User:</span><span class="text-black font-semibold">3.1</span></li>
+                                    <li class="flex justify-between items-center"><span class="font-medium text-gray-400">Impact:</span><span class="text-black font-semibold">1,822,664,704</span></li>
+                                </ul>
+                            </div>
+                            <div class="panel p-4">
+                                <h5 class="font-bold text-black text-base mb-2 text-center">BET Awards</h5>
+                                <ul class="list-none space-y-1.5">
+                                    <li class="flex justify-between items-center"><span class="font-medium text-gray-400">Unique Viewers:</span><span class="text-black font-semibold">14,889</span></li>
+                                    <li class="flex justify-between items-center"><span class="font-medium text-gray-400">View Time (Hrs):</span><span class="text-black font-semibold">33,054</span></li>
+                                    <li class="flex justify-between items-center"><span class="font-medium text-gray-400">Hrs per User:</span><span class="text-black font-semibold">2.2</span></li>
+                                    <li class="flex justify-between items-center"><span class="font-medium text-gray-400">Impact:</span><span class="text-black font-semibold">1,082,710,213</span></li>
+                                </ul>
+                            </div>
+                            <div class="panel p-4">
+                                <h5 class="font-bold text-black text-base mb-2 text-center">The Chi</h5>
+                                <ul class="list-none space-y-1.5">
+                                    <li class="flex justify-between items-center"><span class="font-medium text-gray-400">Unique Viewers:</span><span class="text-black font-semibold">12,097</span></li>
+                                    <li class="flex justify-between items-center"><span class="font-medium text-gray-400">View Time (Hrs):</span><span class="text-black font-semibold">38,207</span></li>
+                                    <li class="flex justify-between items-center"><span class="font-medium text-gray-400">Hrs per User:</span><span class="text-black font-semibold">3.2</span></li>
+                                    <li class="flex justify-between items-center"><span class="font-medium text-gray-400">Impact:</span><span class="text-black font-semibold">1,479,008,253</span></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <p class="text-center text-lg mt-8 text-gray-300">The test set a solid foundation for future innovation. The user enthusiasm and clear engagement signals remain strong indicators of potential, positioning Sling to lead in redefining the live viewing experience when the time is right.</p>
+                    </div>`,
+                  media: `
+                      <h4 class="text-xl font-bold text-slate-900">Media</h4>
+                      <div class="media-viewer mt-3" data-media='${JSON.stringify(
+                        Array.from({length:8},(_,i)=>`images/liverooms/${i+1}.png`)
+                      )}'>
+                         <div class="media-stage">
+                          <img alt="Live Rooms 1" />
+                          <div class="media-controls">
+                            <button class="media-btn prev" aria-label="Previous">&#10094;</button>
+                            <button class="media-btn next" aria-label="Next">&#10095;</button>
+                          </div>
+                        </div>
+                        <div class="media-meta">
+                          <div class="media-caption">Guide 1</div>
+                          <div class="media-pager"><span class="cur">1</span> / <span class="total">8</span></div>
+                        </div>
+                      </div>
+                      <p class="mt-4 text-sm text-center text-slate-600">
+                        Click the image to view full-screen. Use ← → keys to navigate. Press ESC to close.
+                      </p>
+                    `
+                }
+            },
+        ];
+
+        /* ================= Testimonials (FULL NEW DATA) ================= */
+        const testimonials=[ 
+            { quote:"I had the privilege of working with Sphoorthy on our UX/Design team at Sling/Dish TV. Sphoorthy is a very knowledgeable and high quality UX researcher. She helped us gain tremendous consumer insights and improved the velocity and prioritization of our product development roadmap. She is also methodical, thoughtful and collaborative in her approach. I highly recommend her!", author:"Gary Schanman", company:"Fortune 250 C-Level Executive | Media, Sports & Telecom Leader", featured:true },
+            { quote:"I had the pleasure of working with Sphoorthy at Sling, where she consistently brought a thoughtful and user-centric approach to our product development process. Her research was always thorough, actionable, and aligned with both user needs and business goals. Sphoorthy is a collaborative partner who elevates the teams she work with. Any organization would benefit from her expertise.", author:"AL Shanmugam", company:"Head of Product | AI, Personalization & Platform Growth", featured:true },
+            { quote:"Sphoorthy was an invaluable asset to the Sling TV team, leaving an indelible mark on the organization. As a mentor in the realm of user research, she elevated the team's expertise, instilling greater confidence in their ability to identify user pain points and explore the underlying causes with a deeper, more insightful approach. Her contributions have been pivotal in shaping the future of Sling TV, and the product team will forever be grateful for the data and insights that will help make the upcoming redesign the most intuitive and exceptional TV UI in the industry.", author:"Erik Jonathan Nava", company:"Lead Design System Designer @ AXS", featured:false },
+            { quote:"Sphoorthy was a great advocate for user research at DISH/Sling. As a UXR in a different department, I appreciated her efforts to connect research groups across the organization, share insights and connect with other business groups. She would be an excellent addition to your research team!", author:"Caroline Condon", company:"Product Development | Human-centered Design", featured:false },
+            { quote:"I've had the pleasure to work with Sphoorthy, and it is rare to come across a UX Researcher with such a powerful combination of strategic vision, deep user empathy, and methodological expertise. With over a decade of experience, Sphoorthy brings an unmatched ability to translate complex user needs into clear, actionable insights that consistently drive innovation and product excellence. She has a unique ability to tell compelling stories with the data. Her insights don't just answer questions, they inspire action. ... On top of her skillset, Sphoorthy is simply a pleasure to work with.", author:"Erika Nelson", company:"Senior Business Development Manager @ DISH Network & Sling TV", featured:false },
+            { quote:"I had the opportunity to work with Sphoorthy during our shared time together at EchoStar... Sphoorthy's passion for creating top-notch UX experiences came through in all that she did, and that passion, combined with her drive, contributed to not only her success, but the success of the projects she managed.", author:"Debbie G. Freeman, MBA", company:"Insights & Strategic Brand Marketing Executive", featured:true },
+            { quote:"Sphoorthy was an incredible partner to work with on our design team. As a Senior UX Researcher, she helped us level up how we approached research — not by always running the studies herself, but by empowering designers with the right methods, tools, and frameworks to find meaningful insights. ... Sphoorthy also created foundational guidelines and UX scoring systems that brought more consistency to how we tested features — helping us make more confident, data-informed decisions.", author:"Saumya Ghai", company:"Senior Product Designer at Sling TV", featured:false },
+            { quote:"I had the pleasure of working with Sphoorthy, who is a highly skilled UX Researcher with expertise in mixed methods, including effective survey design and distribution. We collaborated closely on projects where she excelled at collecting actionable insights from user feedback. Her work on survey design and usability scoring, combined with her ability to manage multiple projects simultaneously, consistently delivered impactful results for Sling TV. Her get-it-done attitude was so refreshing to see!", author:"Claire Chung", company:"Improving Customer Experience and Products @Spectrum", featured:false },
+            { quote:"I’ve had the pleasure of working with Sphoorthy on multiple projects over the years, and she’s consistently been a thoughtful, strategic, and collaborative UX researcher. She brings clarity to every study, shaping research plans, refining materials, and ensuring the methods align with the goals of the project. ... Beyond the research itself, Sphoorthy is exceptional at turning findings into clear, compelling stories that resonate with stakeholders of all kinds.", author:"Gil M.", company:"Product Designer", featured:false },
+            { quote:"Sphoorthy has all the qualities you’d want in an excellent researcher - she’s collaborative, thoughtful, organized, helpful and curious. She excels at facilitating research herself, as well as helping designers and product managers discover the right methodology for the questions they have. She wrangles teams to work together and reduce siloed thinking. I’d happily recommend Sphoorthy for any research team.", author:"Brandon Melchior", company:"VP of Product Design at AXS", featured:true },
+            { quote:"I've had the privilege of working with Sphoorthy Masa over the last two years at Sling TV. She is a dedicated UX Research Professional who was instrumental in partnering with our Product and Design teams to create and implement our weekly UX Research Cadence, Client Scripting, and Weekly/Monthly Insight Dashboards. ... Above all, she is a warm and charismatic colleague to be around with a fantastic sense of humor.", author:"Steven Cramer", company:"Product Design Leader at DISH / Sling TV", featured:true },
+            { quote:"Sphoorthy is an exceptionally skilled UX researcher and manager, known for her inquisitive nature and methodical approach. She demonstrates a deep mastery of UX research methodologies, best practices, and industry knowledge. ... As a designer, I had the privilege of working closely with her on multiple product features and releases. I consistently relied on her guidance to uncover meaningful insights and gain a deeper understanding of user needs and behaviors.", author:"Matthew Hardy", company:"Product Designer", featured:false },
+            { quote:"Sphoorthy has deep knowledge and intuition on how to approach UX research strategically. She can efficiently whip up the perfect study that informs the design direction and next steps, and knows when we have just the right amount of data. She also has a masterful and diplomatic way of teaching others (like me) how to be more effective researchers and designers. Sphoorthy would be a formidable upgrade to any product team!", author:"Chris Varosy", company:"Product Design Leader and Culture Advocate", featured:true },
+            { quote:"I had the pleasure of collaborating with Sphoorthy during her tenure as a UX Researcher at Sling/DISH. Her strategic research planning and cross-functional collaboration significantly enhanced our product development. Notably, she implemented UMUX-Lite scoring for benchmarking, build out comprehensive and recurrent feature surveys, designed numerous individual studies for various squads, conducted user interviews, and managed the UserZoom platform.", author:"Emily Tuteur", company:"Design Leader and Product Strategist", featured:true },
+            { quote:"Sphoorthy is an exceptional UX researcher whose insights have been invaluable to our team. She consistently delivers thorough, user-driven research that shapes our design decisions and enhances the overall product experience. ... She brings a positive and proactive approach to every challenge.", author:"Eliana Grossman", company:"UX Designer", featured:false },
+            { quote:"Sphoorthy has a GIFT for uncovering what really matters to users. Her research is sharp, actionable, and always grounded in empathy. She brings clarity to complex problems and makes collaboration feel effortless. I’d work with her again in a heartbeat and highly recommend her.", author:"Anish Raul", company:"Generative AI & Personalisation Leader", featured:true },
+            { quote:"I worked with Sphoorthy at Sling TV on multiple projects and she’s been an instrumental part of the team. Her invaluable research skills and knowledge of creative research practices is hard to find. She would be a valuable part of any team and is a pleasure to work with. She even completed her masters while still maintaining her workload and as the only person on her team.", author:"Lara Bingham", company:"Customer obsessed professional", featured:false },
+            { quote:"My Consumer Insights team and I had the pleasure of working with Sphoorthy on several key projects that blend CI and UX. Her thoughtful approach to UX research and collaboration with our team has been invaluable. She has a great ability to translate user needs into impactful, actionable insights, and her collaborative mindset and attention to detail make her a fantastic partner on cross-functional teams.", author:"David Duganne", company:"General Manager - Consumer Insights at DISH Network", featured:false },
+            { quote:"I have worked with Sphoorthy within the Sling/Dish product team. Our collaboration on projects like DIsh Android TV Homescreen and Info cards demonstrated her exceptional research skills and dedication. She revolutionized our approach to UX testing by eliminating preference testing and focusing on understanding user behavior, resulting in deeper insights into user needs.", author:"Mincho Kavaldzhiev,PhD", company:"Designer at Amazon", featured:false },
+            { quote:"I collaborated closely with Sphoorthy on several key projects... She consistently demonstrated exceptional attention to detail and deep empathy for our users in every aspect of user research, from conducting insightful user interviews and analyzing survey data to facilitating engaging card sorting sessions. ... What truly set Sphoorthy apart were her exceptional communication skills.", author:"Maryna L.", company:"Product Designer prev. Sling TV", featured:false },
+            { quote:"Sphoorthy is a kind and positive person. She is very detail oriented and methodical, and invests many hours in her research, producing an organized and clear delivery.", author:"Kyunghee Lee", company:"Product & UX Strategy", featured:false },
+            { quote:"Sphoorthy is an asset to any product team that wants to ensure data-driven decisions. I worked with Sphoorthy many times testing various designs and she always knew the best method to utilize to get the questions we had answered. Working with Sphoorthy is easy because she is cognizant of details and communicates throughout every step of the research process.", author:"Matt Dean", company:"Sr. Product Design Contractor", featured:false },
+            { quote:"When it comes to user experience (UX) strategy, Sphoorthy knows what to do and she does it. ... Sphoorthy was very good at keeping the project moving forward. Because she knows the UX process and is task oriented she would look forward to what needed to be done and make plans to complete the work. She willingly participated in every step of the way.", author:"Randal Flamm", company:"UX Designer at Emplify", featured:false },
+            { quote:"Sphoorthy exhibits great drive and initiative. Her experience and ability to move forward without needing extensive direction was a great asset when working on fast paced, strategic projects that needed DUX expertise. She always had a great attitude and is someone I really enjoyed having on my teams.", author:"Alicia Waletzko, RHIA, PMP", company:"Innovation Integration Partner", featured:false },
+                      { quote:"I have had the opportunity to work alongside Sphoorthy with a few different projects. She brings a great personality to the teams she works with. Here attention to detail, interview techniques and communication skills is an wonderful asset. She focuses on really understanding the customer's processes... and is great at bring their experiences and voice to the work.", author:"Rebecca Bryan", company:"Solution Owner Pharmacy Optimization", featured:false },
+            { quote:"I would recommend Sphoorthy as she is knowledgeable about User Experience and cares about her work. She is an active listener and asks the proper questions to help keep agendas moving along. Sphoorthy is a great teammate and someone you can count on to be successful.", author:"Lance Mason", company:"IT Project Manager at Kwik Trip, Inc.", featured:false },
+            { quote:"I have had the opportunity to work with Sphoorthy on several occasions. She is extremely knowledgeable and organized. She is a pleasure to work with and is a valuable member of any team she is a part of.", author:"Jessica Easterday", company:"Director-Virtual Care at Emplify Health by Gundersen", featured:false },
+            { quote:"I have collaborated with Sphoorthy on a number of occasions. She is engaged in and passionate about her work. She is knowledgeable and talented and great to work with.", author:"Mark Erickson", company:"Director, Enterprise Architecture and Solution Design", featured:false },
+            { quote:"I worked with Sphoorthy on one of our projects at Gundersen Health System; a collaboration between DUX and PX. Sphoorthy was very collaborative, communicative and responsive. All the qualities you would want from an excellent team player.", author:"Christy Onyeabor, MSHCM", company:"Operations Manager at Mayo Clinic Health System", featured:false },
+            { quote:"Sphoorthy was a great colleague. She was very knowledgeable about user experience and jumped right into any project she was on.", author:"Jenessa Miller", company:"Principal Application Analyst at Vanderbilt University Medical Center", featured:false },
+            { quote:"Sphoorthy is a very talented UX designer and often offered great insight into how we approached both web applications and pages. With a diverse set of design and technical skills, Sphoorthy would be a great asset to have as part of any team or project", author:"Rudy Slama", company:"Art Direction, Design & Illustration", featured:false }
+        ];
+/* ================= RENDER HERO CARDS ================= */
+function renderHeroCarousel() {
+    const track = document.querySelector(".hero-track");
+    if (!track) return;
+
+    const cards = projects.map(project => `
+        <div class="hero-card" data-id="${project.id}">
+            <div class="hero-image-container">
+                <img src="${project.images[0]}" alt="${project.title}">
+            </div>
+            <div class="hero-content">
+                <h2>${project.title}</h2>
+                <p>${project.hook}</p>
+                <div class="hero-meta">
+                    ${project.tags.map(t => `<span>${t}</span>`).join("")}
+                </div>
+                <div class="hero-buttons">
+                    <button class="btn btn-primary" data-open="${project.id}">
+                        <span>View Case Study</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    `).join("");
+
+    track.innerHTML = cards;
+}
+
+/* ================= RENDER TESTIMONIALS ================= */
+function renderTestimonials() {
+    const container = document.getElementById("testimonial-scroller");
+    if (!container) return;
+
+    const items = testimonials.map(t => `
+        <div class="testimonial-card">
+            <p class="italic">"${t.quote}"</p>
+            <div class="author-info">
+                <p class="font-bold text-black">${t.author}</p>
+                <p class="text-sm text-gray-400">${t.company}</p>
+            </div>
+        </div>
+    `).join("");
+
+    container.innerHTML = `
+        <div class="scroller-inner">
+            ${items} ${items} 
+        </div>
+    `;
+}
+
+/* ================= PROJECT MODAL OPENING ================= */
+function initProjectModal() {
+    const modal = document.getElementById("project-modal");
+    const modalBody = modal.querySelector(".modal-body");
+    const closeBtn = modal.querySelector(".modal-close-btn");
+
+    document.body.addEventListener("click", e => {
+        const btn = e.target.closest("[data-open]");
+        if (!btn) return;
+
+        const id = btn.dataset.open;
+        const project = projects.find(p => p.id === id);
+        if (!project) return;
+
+        modalBody.innerHTML = `
+            ${project.content.overview}
+            ${project.content.methodology}
+            ${project.content.analysis}
+            ${project.content.results}
+            ${project.content.media}
+        `;
+
+        modal.classList.add("open");
+        document.body.style.overflow = "hidden";
+    });
+
+    closeBtn.addEventListener("click", () => {
+        modal.classList.remove("open");
+        document.body.style.overflow = "";
+    });
+}
+
+/* ================= MEDIA VIEWER INIT ================= */
+function initMediaViewers() {
+    document.body.addEventListener("click", e => {
+        const viewer = e.target.closest(".media-viewer img");
+        if (!viewer) return;
+
+        const wrapper = viewer.closest(".media-viewer");
+        const mediaList = JSON.parse(wrapper.dataset.media);
+
+        let index = 0;
+        const lightbox = document.createElement("div");
+        lightbox.className = "lightbox open";
+
+        lightbox.innerHTML = `
+            <div class="lightbox-inner">
+                <div class="lightbox-stage">
+                    <img src="${mediaList[index]}">
+                    <div class="lightbox-controls">
+                        <button class="lightbox-btn prev">&#10094;</button>
+                        <button class="lightbox-btn next">&#10095;</button>
+                    </div>
+                </div>
+                <div class="lightbox-topbar">
+                    <div>${index + 1} / ${mediaList.length}</div>
+                    <button class="close">&times;</button>
+                </div>
+            </div>
+        `;
+
+        document.body.appendChild(lightbox);
+
+        const updateImg = () => {
+            lightbox.querySelector("img").src = mediaList[index];
+            lightbox.querySelector(".lightbox-topbar div").textContent = `${index + 1} / ${mediaList.length}`;
+        };
+
+        lightbox.querySelector(".prev").onclick = () => {
+            index = (index - 1 + mediaList.length) % mediaList.length;
+            updateImg();
+        };
+
+        lightbox.querySelector(".next").onclick = () => {
+            index = (index + 1) % mediaList.length;
+            updateImg();
+        };
+
+        lightbox.querySelector(".close").onclick = () => {
+            lightbox.remove();
+        };
+    });
+}
+
+/* ================= EXECUTE ALL RENDERERS ================= */
+renderHeroCarousel();
+renderTestimonials();
+initProjectModal();
+initMediaViewers();
+
+
